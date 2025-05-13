@@ -1,0 +1,5 @@
+name = "FortGAN"
+version = "0.1.0"
+license = "MIT"
+author = ["elahpeca <acephaleee@gmail.com>"]
+description = "Automatic differentiation library for Fortran"
