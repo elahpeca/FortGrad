@@ -1,12 +1,36 @@
 program test_dual
-    use :: dual_numbers, only: dual
+    use dual_numbers
     implicit none
 
-    type(dual) :: d, b
+    type(dual) :: d1, d2, d3
 
-    d = dual(2.0) ! Value-only test
-    call d % print()
+    d1 = dual(1.0, [0.5, 0.5])
+    d2 = dual(2.0, [1.0, -1.0])
 
-    b = dual(2, [1.0, 2.0, 3.0]) ! Full test
-    call b % print()
-end program test_dual
+    d3 = d1 + d2
+    call d3%print()
+    d3 = d3 + 0.5
+    d3 = 0.5 + d3
+    call d3%print()
+
+    d3 = d3 - 0.5
+    d3 = 0.5 - d3
+    call d3%print()
+    d3 = -d3
+    call d3%print()
+    d3 = d3 - d1
+    call d3%print()
+
+    d3 = d3 * d2
+    call d3%print()
+    d3 = d3 * 2.0
+    d3 = 2.0 * d3 
+    call d3%print()
+
+    d3 = d3 / d2
+    call d3%print()
+    d3 = d3 / 4.0
+    call d3%print()
+    d3 = 1.0 / d3
+    call d3%print()
+end program
