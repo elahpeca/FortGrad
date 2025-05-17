@@ -15,14 +15,11 @@ program linear_regression
     real(8) :: train_y(5) = [3.0, 5.0, 7.0, 9.0, 11.0]
 
     ! Nodes for data (create once and reuse)
-    class(Node), pointer :: x, y_true, y_pred, loss, h
+    class(Node), pointer :: x, y_true, y_pred, loss
     
     ! Initialize weights
     w => Node(0.0d0)
     b => Node(0.0d0)
-
-    ! 1/2
-    h => Node(0.5d0) 
     
     ! Create nodes for data; initialize with some initial value
     x => Node(0.0d0) 
@@ -42,8 +39,8 @@ program linear_regression
             y_true%value = train_y(i)
             
             ! Forward pass: compute prediction and loss
-            y_pred => add(multiply(w, x), b)
-            loss => multiply(h, multiply(subtract(y_pred, y_true), subtract(y_pred, y_true)))
+            y_pred => w * x + b
+            loss => const(0.5d0) * (y_pred - y_true) * (y_pred - y_true)
             
             ! Backward pass: compute gradients
             call loss%backward(.true.)
@@ -59,11 +56,15 @@ program linear_regression
         end do
         
         if (mod(epoch, 20) == 0) then
-            print *, 'Epoch:', epoch, 'Loss:', total_loss/n_samples, 'w:', w%value, 'b:', b%value
+            print '(A,I5,A,F8.4,A,F8.4,A,F8.4)', &
+                  'Epoch:', epoch, &
+                  ' | Loss:', total_loss/n_samples, &
+                  ' | w:', w%value, &
+                  ' | b:', b%value
         end if
     end do
     
     print *, 'Trained model: y =', w%value, '* x +', b%value
 
-    deallocate(w, b, x, y_true, h)
+    deallocate(w, b, x, y_true)
 end program linear_regression
