@@ -1,4 +1,4 @@
-#VSCode config files
+# VS Code Workspace settings
 .vscode
 
 # Prerequisites
@@ -19,7 +19,7 @@
 *.dylib
 *.dll
 
-# Fortran module files
+# Fortran Module files
 *.mod
 *.smod
 
